@@ -2,10 +2,17 @@
 
     <?php 
         require "include/boshi.php";
-        require "database.php";
+        require "baza.php";
         
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            var_dump($_POST);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+           $ism=$_POST['ism'];
+           $email=$_POST['email'];
+           $raqam=$_POST['raqam'];
+           $xabar=$_POST['xabar'];
+           $jonatish= $pdo->prepare("INSERT INTO kontakt (ism,email,raqam,xabar) VALUES (?,?,?,?)");
+           $jonatish->execute([$ism,$email,$raqam,$xabar]);
+           echo "jo'natildi";
+           
         }
     ?>
     
@@ -260,7 +267,7 @@
     </div>   <br><br>
     <hr> 
     <!-- ++++++++++++++ -->
-    <div class="container mb-4">
+    <div class="container mb-4" >
 
         <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
 
@@ -270,7 +277,7 @@
         <div class="row">
 
             <div class="col-md-9 mb-md-0 mb-5">
-                <form  name="contact-form" action="" method="POST">
+                <form  method="post" action="">
 
                     <div class="row">
 
@@ -283,7 +290,7 @@
                         
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" name="email" class="form-control">
+                                <input type="text" name="email" placeholder="nomi@gmail.com" pattern=".+@gmail\.com" class="form-control">
                                 <label class="">Your email</label>
                             </div>
                         </div>
@@ -294,7 +301,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form mb-0">
-                                <input type="text" name="mavzu" class="form-control">
+                                <!-- <input type="number" name="mavzu" "> -->
+                                <input type="tel"  name="raqam" placeholder="90-123-45-67" pattern="[0-9]{2}[0-9]{3}[0-9]{2}[0-9]{2}" class="form-control" >
                                 <label class="">Subject</label>
                             </div>
                         </div>
@@ -305,19 +313,17 @@
                         <div class="col-md-12">
 
                             <div class="md-form">
-                                <textarea type="text" name="matn" rows="2" class="form-control md-textarea"></textarea>
+                                <textarea type="text" name="xabar" rows="2" class="form-control md-textarea" placeholder="Xabaringiz 300 ta  belgidan oshmasligi kerak " maxlength="300" ></textarea>
                                 <label>Your message</label>
                             </div>
 
                         </div>
                     </div>
-
+                    <div class="text-center text-md-left">
+                        <input class="btn btn-primary" type="submit">
+                     </div>
+                     <div class="status"></div>
                 </form>
-
-                <div class="text-center text-md-left">
-                    <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
-                </div>
-                <div class="status"></div>
             </div>
 
             <div class="col-md-3 text-center">
@@ -340,7 +346,4 @@
         <hr class="featurette-divider">
     </div>
 <br>
-    <?php require "include/oxiri.php" ?>
-
-
-    
+    <?php require "include/oxiri.php" ?>   
