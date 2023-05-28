@@ -9,9 +9,8 @@
            $email=$_POST['email'];
            $raqam=$_POST['raqam'];
            $xabar=$_POST['xabar'];
-           $jonatish= $pdo->prepare("INSERT INTO kontakt (ism,email,raqam,xabar) VALUES (?,?,?,?)");
-           $jonatish->execute([$ism,$email,$raqam,$xabar]);
-           echo "jo'natildi";
+           $buyruq= $pdo->prepare("INSERT INTO kontakt (ism,email,raqam,xabar) VALUES (?,?,?,?)");
+           $buyruq->execute([$ism,$email,$raqam,$xabar]);
            
         }
     ?>
