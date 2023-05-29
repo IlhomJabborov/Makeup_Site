@@ -1,5 +1,23 @@
 <?php 
-    require"baza.php";
+    require"baza.php"; 
+
+    $m="";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $img=$_FILES['image']['name'];
+        $matn=$_POST['matn'];
+        
+        $buyruq= $pdo->prepare("INSERT INTO rasm (img_url,matn) VALUES (?,?)");
+        $buyruq->execute([$img,$matn]);
+
+        if( move_uploaded_file($_FILES['image']['tmp_name'],"images/".$_FILES['image']['name'])){
+            $m="yaxshi";
+        }else{
+            $m="yomon";
+        }
+        
+     }
+
 
     $buyruq=$pdo->prepare("SELECT * FROM kontakt ORDER BY id DESC");
     $buyruq->execute();
@@ -28,8 +46,21 @@
 </head>
 <body>
     <br><br><br>
-    <form action="">
-        <input type="file" placeholder="Yuklash" value="YuklAG">
+
+    <form  method="post" action="" enctype="multipart/form-data">
+        <input type="hidden" name="size" value="1000000">
+        <div>
+        <!-- <label for="formFileLg" class="form-label">Large file input example</label> -->
+            <input class="form-control form-control-lg" name="image" type="file">
+        </div>
+        <div class="md-form mb-0">
+            <input type="text" name="matn" class="form-control">
+            <label class="">Your name</label>
+        </div>
+        <div class="text-center text-md-left">
+            <input class="btn btn-primary" type="submit">
+        </div>
+    
     </form>
     
     <div class="container">
