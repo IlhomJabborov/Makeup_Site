@@ -3,7 +3,7 @@
     require "./include/boshi.php" ;
     require "baza.php";
 
-    $buyruq=$pdo->prepare("SELECT * FROM rasm ORDER BY id DESC");
+    $buyruq=$pdo->prepare("SELECT * FROM images ORDER BY id DESC");
     $buyruq->execute();
 
     $img_olish=$buyruq->fetchAll();
@@ -25,9 +25,9 @@
                 <?php foreach($img_olish as $olish): ?>
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="/images/".<?php echo $olish['img_url'] ?> alt="mijoz rasmi" width="100%" height="350">
+                            <?php echo "<img src='data:" . $olish['mime_type'] . ";base64," . base64_encode($olish['image_data']) . "' width=100% height=350>";?>
                             <div class="card-body">
-                                <p class="card-text"><?php echo $olish['matn'] ?></p>
+                                <p class="card-text"><?php echo $olish['malumot'] ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Bog'lanish</button>
@@ -41,6 +41,5 @@
         </div>
     </div>
 
-
-
+    
 <?php require "./include/oxiri.php" ?>

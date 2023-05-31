@@ -3,6 +3,11 @@
     <?php 
         require "include/boshi.php";
         require "baza.php";
+
+        $buyruq=$pdo->prepare("SELECT * FROM images ORDER BY id DESC");
+        $buyruq->execute();
+
+        $img_olish=$buyruq->fetchAll();
         
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
            $ism=$_POST['ism'];
@@ -17,11 +22,12 @@
     
     <div class="px-4 py-5 my-5 text-center">
         <img class="d-block mx-auto mb-4 " src="./rasmlar/emblema.jpg" alt="" width="112" height="97">
-        <h1 class="display-5 fw-bold text-body-emphasis">Saytimizga xush kelibsiz</h1>
+        <h1 class="display-5 fw-bold text-body-emphasis">Xush kelibsiz</h1>
         <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <p class="lead mb-4">Siz hozirda professional makiyaj xizmatlari joylashgan
+to'g'ri manzildasiz.Agar xizmatimiz  sizga yoqmasa,bizga xizmat haqqini to'lashingiz shart emas </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-           <a href="namuna.php"> <button type="button" class="btn btn-primary btn-lg px-4 gap-3" >Primary button</button></a>
+           <a href="namuna.php"> <button type="button" class="btn btn-primary btn-lg px-4 gap-3" >Bog'lanish</button></a>
         </div>
         </div>
     </div>
@@ -66,84 +72,25 @@
      <!-- +++++++++ -->
      <div class="container">
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal">Pricing</h1>
-            <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+            <h1 class="display-4 fw-normal">Namunalar</h1>
+            <p class="fs-5 text-body-secondary">Bizning eng yaxshi ishlaarimizdan namunalar</p>
             </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-            <div class="card shadow-sm ">
-                <img src="/rasmlar/1.jpg" alt="mijoz rasmi" width="100%" height="350">
-    
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                    <a href="/namuna.php"><button type="button" class="btn btn-sm btn-outline-secondary">Ko'proq</button></a>
-                    
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col">
-            <div class="card shadow-sm">
-                <img src="/rasmlar/2.jpg" alt="mijoz rasmi" width="100%" height="350">
-    
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                    <a href="/namuna.php"><button type="button" class="btn btn-sm btn-outline-secondary">Ko'proq</button></a>
-                    
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col">
-            <div class="card shadow-sm">
-                <img src="/rasmlar/3.jpg" alt="mijoz rasmi" width="100%" height="350">
-    
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                    <a href="/namuna.php"><button type="button" class="btn btn-sm btn-outline-secondary">Ko'proq</button></a>
-                    
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col">
-            <div class="card shadow-sm">
-                <img src="/rasmlar/4.jpg" alt="mijoz rasmi" width="100%" height="350">
-    
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                    <a href="/namuna.php"><button type="button" class="btn btn-sm btn-outline-secondary">Ko'proq</button></a>
-                    
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div><div class="col">
-            <div class="card shadow-sm">
-                <img src="/rasmlar/5.jpg" alt="mijoz rasmi" width="100%" height="350">
-    
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                    <a href="/namuna.php"><button type="button" class="btn btn-sm btn-outline-secondary">Ko'proq</button></a>
-                    
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
+                    <?php foreach($img_olish as $olish): ?>
+                        <div class="col" >
+                            <div class="card shadow-sm">
+                                <?php echo "<img src='data:" . $olish['mime_type'] . ";base64," . base64_encode($olish['image_data']) . "' width=100% height=350>";?>
+                                <div class="card-body">
+                                    <p class="card-text"><?php echo $olish['malumot'] ?></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Bog'lanish</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
         </div>
         <hr class="featurette-divider">
     </div> <
